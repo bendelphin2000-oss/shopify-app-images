@@ -13,11 +13,11 @@ export async function loader({ request }) {
       }
     `);
 
-    const data = await response.json();
+    const json = await response.json();
 
     return {
       status: "OK",
-      shop: data.data.shop.name
+      shop: json.data.shop.name
     };
 
   } catch (e) {
