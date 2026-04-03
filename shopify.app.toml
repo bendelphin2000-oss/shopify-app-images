@@ -2,12 +2,11 @@
 
 client_id = "fc49309e435d744476453ad911ed90b5"
 name = "prueba1"
-application_url = "https://example.com"
+application_url = "https://shopify-app-images.onrender.com"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
-include_config_on_deploy = true
 
 [webhooks]
 api_version = "2026-04"
@@ -27,7 +26,12 @@ optional_scopes = [ ]
 use_legacy_install_flow = false
 
 [auth]
-redirect_urls = [ ]
+redirect_urls = [
+    "https://shopify-app-images.onrender.com/auth/callback",
+    "https://shopify-app-images.onrender.com/auth/shopify/callback",
+    "https://shopify-app-images.onrender.com/api/auth/callback"
+    
+ ]
 
 [product.metafields.app.demo_info]
 type = "single_line_text_field"
