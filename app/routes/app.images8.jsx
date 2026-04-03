@@ -10,6 +10,7 @@ export async function loader({ request }) {
         files(first: 100) {
           edges {
             node {
+              id
               ... on MediaImage {
                 image {
                   url
@@ -26,7 +27,10 @@ export async function loader({ request }) {
     const json = await response.json();
 
     const images = json.data.files.edges
-      .map(e => e.node.image)
+      .map(e => ({
+        id: e.node.id,
+        ...e.node.image
+      }))
       .filter(img => img && (img.width > 1250 || img.height > 1250))
       .map(img => ({
         ...img,
@@ -59,11 +63,30 @@ export default function ImagesPage() {
     <div style={{ padding: "20px" }}>
       <h1>Imágenes grandes</h1>
 
-      {data.images.map((img, i) => (
-        <div key={i}>
-          {img.width} x {img.height}
-        </div>
-      ))}
+      {data.images.map((img, i) => {
+        const id = img.id.split("/").pop();
+
+        return (
+          <div key={i} style={{ marginBottom: "10px" }}>
+            <div>
+              {img.width} x {img.height}
+            </div>
+
+            <div>
+              <a href={img.url} target="_blank">
+                Ver imagen
+              </a>{" | "}
+
+              <a
+                href={`https://admin.shopify.com/store/rqandv-ya/content/files/${id}`}
+                target="_blank"
+              >
+                Editar
+              </a>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
