@@ -1,4 +1,4 @@
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 
 export async function loader() {
   return { mensaje: "Hola desde loader 🚀" };
